@@ -27,8 +27,8 @@ function totalSupply() public view returns (uint256){
     return _totalSupply;
     }   
 
-function balanceOf() public view returns (uint256){
-    return balances[_owner];
+function balanceOf(address _to) public view returns (uint256){
+    return balances[_to];
     }
 
 function transfer(address _to, uint256 _value) external returns (bool success){
@@ -67,15 +67,16 @@ function transferFrom(address _from, address _to, uint256 _value) external retur
 
 function approve(address _to, uint256 _value) external returns (bool success){
     require(msg.sender != address(0), "transferfrom the zero address");
-    require(_from != address(0), "transfer from the zero address");
-    require(msg.sender == owner);
+    require(msg.sender == _to);
     
     emit Approval(msg.sender, _to, _value);
     }
 
-function allowance(address _to, address _from) public view returns (uint256 ){
-    
+function allowance(address _to, address _from) public view returns (uint256){
+    return allowances[_to][_from];
+    }   
 
-    }
+event Transfer(address _to, address _from, uint256 value);
+event Approval(address _to, address _from, uint256 _value);
 
 }
